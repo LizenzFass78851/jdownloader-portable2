@@ -192,7 +192,13 @@ jobs:
       - name: download-compare
         id: download-compare
         if: needs.generate.outputs.latest_version != 'true'
-        run: echo "${{ needs.generate.outputs.compare-env-x64 }}" > ${{ env.COMPARE_FILE0 }}
+        run: |
+          if [ "${{ needs.generate.outputs.compare-env-x64 }}" = "${{ needs.generate.outputs.compare-env-arm64 }}" ]; then
+            echo "${{ needs.generate.outputs.compare-env-x64 }}" > ${{ env.COMPARE_FILE0 }}
+          else
+            echo "Error: compare-env of x64 and arm64 do not match"
+            exit 1
+          fi
 
       - name: Delete existing tag
         shell: sh
