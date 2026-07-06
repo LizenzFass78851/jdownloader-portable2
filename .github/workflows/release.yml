@@ -170,6 +170,7 @@ jobs:
           name: LMStudioPortable-${{ matrix.arch }}.7z
           path: /tmp/LMStudioPortable-${{ matrix.arch }}.7z
           archive: false
+          retention-days: 1
       - name: upload-compare
         id: upload-compare
         if: steps.compare.outputs.latest_version != 'true'
